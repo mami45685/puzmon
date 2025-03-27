@@ -1,6 +1,14 @@
 #インポート
 
 #グローバル宣言
+ELEMENT_SYMBOLS={
+    "火":"$",
+    "水":"~",
+    "風":"@",
+    "土":"#",
+    "命":"&",
+    "無":" ",
+}
 
         
 #関数宣言
@@ -73,9 +81,18 @@ def go_dungeon(player_name,monster_list):
     return kills
 
 def do_battle(monster):
-    print(f"{monster['name']}が現れた！")
-    print(f"{monster['name']}を倒した！")
+    print_monster_name(monster)
+    print("が現れた！")
+    print_monster_name(monster)
+    print("を倒した！")
     return 1
+
+def print_monster_name(monster):
+    monster_name=monster["name"]
+    symbol = ELEMENT_SYMBOLS[monster["element"]]
+
+    #モンスター名を表示
+    print(f"{symbol}{monster_name}{symbol}",end="")
 
 
 #main関数の呼び出し
