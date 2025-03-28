@@ -182,7 +182,7 @@ def on_player_turn(party,monster):
     do_attack(monster,command)
 
 def on_enemy_turn(party,monster):
-    print(f"\n,【",end="")
+    print(f"\n【",end="")
     print_monster_name(monster)
     print(f"のターン】(HP={monster['hp']})")
     do_enemy_attack(party)
