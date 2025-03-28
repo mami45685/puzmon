@@ -1,4 +1,5 @@
 #インポート
+import random
 
 #グローバル宣言
 ELEMENT_SYMBOLS={
@@ -118,9 +119,8 @@ def go_dungeon(party,monster_list):
     print(f"{party['name']}のパーティ（HP＝{party['hp']}）はダンジョンに到着した")
     show_party(party)
     for monster in monster_list:
-        kills += do_battle(monster)
+        kills += do_battle(party,monster)
         if party["hp"]<=0:
-            print(f"{party['name']}はダンジョンから逃げ出した")
             print("------------------------------")
             break
         print(f"{party['name']}はさらに奥に進んだ")
@@ -130,9 +130,17 @@ def go_dungeon(party,monster_list):
 
     return kills
 
-def do_battle(monster):
+def do_battle(party,monster):
     print_monster_name(monster)
     print("が現れた！")
+    while True:
+        on_player_turn(party,monster)
+        if monster["hp"] >= 0:
+            break
+        on_enemy_turn(party,monster)
+        if party["hp"] >= 0:
+            print("パーティのHPが0になった")
+            return 0
     print_monster_name(monster)
     print("を倒した！")
     return 1
@@ -167,6 +175,33 @@ def show_party(party):
         print(f" HP={friend['hp']} 攻撃={friend['ap']} 防御={friend['dp']}")
     print("------------------------------")
     print()
+
+def on_player_turn(party,monster):
+    print(f"【{party['name']}のターン】(HP={party['hp']})")
+    command = input("コマンド？>>")
+    do_attack(monster,command)
+
+def on_enemy_turn(party,monster):
+    print(f"\n,【",end="")
+    print_monster_name(monster)
+    print(f"のターン】(HP={monster['hp']})")
+    do_enemy_attack(party)
+
+def do_attack(monster,command):
+    damage= int(hash(command)% 50)
+    rand =random.uniform(-0.1,0.9)+1
+    damage=int(damage*rand)
+    print(f"{damage}のダメージを与えた")
+    monster['hp']-=damage
+
+def do_enemy_attack(party):
+    damage= 200
+    print(f"{damage}のダメージを与えた")
+    party['hp']-=damage
+
+
+
+
 
 #main関数の呼び出し
 main()
