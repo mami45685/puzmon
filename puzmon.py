@@ -135,10 +135,10 @@ def do_battle(party,monster):
     print("が現れた！")
     while True:
         on_player_turn(party,monster)
-        if monster["hp"] >= 0:
+        if monster["hp"] <= 0:
             break
         on_enemy_turn(party,monster)
-        if party["hp"] >= 0:
+        if party["hp"] <= 0:
             print("パーティのHPが0になった")
             return 0
     print_monster_name(monster)
