@@ -136,6 +136,7 @@ def do_battle(party,monster):
     print_monster_name(monster)
     print("が現れた！")
     fill_gems()
+    check_banishable()
     while True:
         on_player_turn(party,monster)
         if monster["hp"] <= 0:
@@ -259,6 +260,25 @@ def move_gem(command):
 
 def evaluate_gems(monster,command):
     do_attack(monster,command)
+
+def check_banishable():
+    arrs=[]
+    for i in range(len(IDXS)):
+        if IDXS[i]==IDXS[i+1] and IDXS[i]!="":
+            arr.push[i+2]
+            if IDXS[i-1]!="":
+                arr.push[i-1]
+    print(set(arrs))
+            
+
+def banish_gems():
+    pass
+
+def shift_gems():
+    pass
+
+def spawn_gems():
+    pass
 
 #main関数の呼び出し
 main()
