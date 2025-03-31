@@ -259,26 +259,53 @@ def move_gem(command):
         print()
 
 def evaluate_gems(monster,command):
-    do_attack(monster,command)
+    start_idx = check_banishable()
+    if start_idx != -1:
+        banish_gems(start_idx)
+        do_attack(monster,command)
+        shift_gems()
+    else :
+        pass
 
 def check_banishable():
-    arrs=[]
-    for i in range(len(IDXS)):
-        if IDXS[i]==IDXS[i+1] and IDXS[i]!="":
-            arr.push[i+2]
-            if IDXS[i-1]!="":
-                arr.push[i-1]
-    print(set(arrs))
-            
+    count = 1
+    for i in range(1,len(gems)):
+        if gems[i] == gems[i-1]:
+            count += 1
+            if count == 3:
+                return i-2
+        else:
+            count = 1
+    return -1
 
-def banish_gems():
-    pass
+
+def banish_gems(start_idx):
+    gem = gems[start_idx]
+    for i in range(start_idx,len(gems)):
+        if gem != gems[i]:
+            break
+        gems[i] = 5
+    print_gems()    
 
 def shift_gems():
-    pass
+    print_gems()
+    for i in range(len(gems)-1,-1,-1):
+        if gems[i] == 5:
+            popped = gems.pop(i)
+            gems.append(popped)
+            print_gems()
+    spawn_gems()
 
 def spawn_gems():
-    pass
+    #↓とやってることは同じ一行だけどわかりにくいかもなので
+    #global gems
+    #gems = [random.randint(0,4) if n == 5 else n for n in gems]
+    
+    for i in range(len(gems)):
+        if gems[i] == 5:
+            gems[i] = random.randint(0,4)
+    print_gems()
+    print()
 
 #main関数の呼び出し
 main()
